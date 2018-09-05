@@ -1,6 +1,6 @@
 #!/bin/bash
 ############################
-# .make.sh
+# ./install
 # This script creates symlinks from the home directory to any desired .rick in ~/.rick
 ############################
 
@@ -8,7 +8,7 @@
 
 dir=~/.rick                    # .rick directory
 olddir=~/.rick_old             # old .rick backup directory
-files="bashrc vimrc vim vim_runtime config profile"    # list of files/folders to symlink in homedir
+files="bashrc vimrc vim vim_runtime"    # list of files/folders to symlink in homedir
 
 ##########
 
