@@ -1,0 +1,31 @@
+#!/bin/bash
+############################
+# .make.sh
+# This script creates symlinks from the home directory to any desired .rick in ~/.rick
+############################
+
+########## Variables
+
+dir=~/.rick                    # .rick directory
+olddir=~/.rick_old             # old .rick backup directory
+files="bashrc vimrc vim vim_runtime config profile"    # list of files/folders to symlink in homedir
+
+##########
+
+# create .rick_old in homedir
+echo "Creating $olddir for backup of any existing .rick in ~"
+mkdir -p $olddir
+echo "...done"
+
+# change to the .rick directory
+echo "Changing to the $dir directory"
+cd $dir
+echo "...done"
+
+# move any existing .rick in homedir to .rick_old directory, then create symlinks 
+for file in $files; do
+  echo "Moving any existing .rick from ~ to $olddir"
+  mv ~/.$file ~/.rick_old/
+  echo "Creating symlink to $file in home directory."
+  ln -s $dir/$file ~/.$file
+done
