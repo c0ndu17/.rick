@@ -1,4 +1,4 @@
-# Copyright 2010-2015 Greg Hurrell. All rights reserved.
+# Copyright 2010-present Greg Hurrell. All rights reserved.
 # Licensed under the terms of the BSD 2-clause license.
 
 require 'spec_helper'
@@ -24,21 +24,21 @@ describe CommandT::Controller do
       stub(::VIM).evaluate('a:arg').returns('')
       set_string('g:CommandTTraverseSCM', 'pwd')
       controller.show_file_finder
-      mock(::VIM).command('silent e path/to/selection')
+      mock(::VIM).command('silent CommandTOpen edit path/to/selection')
       controller.accept_selection
     end
 
     it 'opens absolute paths outside the working directory' do
       stub(::VIM).evaluate('a:arg').returns('../outside')
       controller.show_file_finder
-      mock(::VIM).command('silent e /working/outside/path/to/selection')
+      mock(::VIM).command('silent CommandTOpen edit /working/outside/path/to/selection')
       controller.accept_selection
     end
 
     it 'does not get confused by common directory prefixes' do
       stub(::VIM).evaluate('a:arg').returns('../directory-oops')
       controller.show_file_finder
-      mock(::VIM).command('silent e /working/directory-oops/path/to/selection')
+      mock(::VIM).command('silent CommandTOpen edit /working/directory-oops/path/to/selection')
       controller.accept_selection
     end
 
@@ -78,6 +78,7 @@ describe CommandT::Controller do
     stub(prompt).focus
     stub(prompt).unfocus
     stub(prompt).clear!
+    stub(prompt).redraw
     stub(prompt).abbrev.returns(abbrev)
     stub(CommandT::Prompt).new.returns(prompt)
   end
@@ -94,5 +95,7 @@ describe CommandT::Controller do
     stub(::VIM).evaluate('&buflisted').returns('1')
     stub(::VIM).evaluate('&lines').returns('80')
     stub(::VIM).evaluate('&term').returns('vt100')
+    stub(::VIM).evaluate('v:version').returns(704)
+    stub(::VIM).evaluate('!&buflisted && &buftype == "nofile"')
   end
 end
