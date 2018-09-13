@@ -2,6 +2,6 @@
 ![RIIIIIIICK!](rick.png)
 ### Installation
 ```
-  ./rick/install
+  ./.rick/install
 ```
 ... aaaand you're done.
